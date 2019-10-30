@@ -1,13 +1,17 @@
 <launch>
 
+  <!-- Create an argument to determine whether to use the external clock. -->
+  <arg name="external_clock" default="false" />
+
+  <!-- Play the bag file. -->
+  <node if="$(arg external_clock)" pkg="rosbag" type="play" name="player" output="screen" args="--clock $(find my_robot)/bag/glennan_5_basic.bag /tf_trajectory:=/tf"/>
+  <node unless="$(arg external_clock)" pkg="rosbag" type="play" name="player" output="screen" args="$(find my_robot)/bag/glennan_5_basic.bag /tf_trajectory:=/tf"/>
+
   <!-- Create an argument to determine whether to use the robot with imu. -->
   <arg name="use_imu" default="false" />
 
   <!-- Create an argument to determine whether to use the GUI. -->
   <arg name="gui" value="false" />
-
-  <!-- Create an argument to determine whether to use the external clock. -->
-  <arg name="external_clock" default="false" />
 
   <!-- Create an argument to determine whether to use the decay sensors. -->
   <arg name="use_decay" default="false" />
